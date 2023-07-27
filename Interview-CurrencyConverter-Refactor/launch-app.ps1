@@ -12,9 +12,27 @@ function Test-DotNetSDKInstalled {
 # Check if .NET SDK is installed
 Write-Host "Check if .NET SDK is installed..."
 if (Test-DotNetSDKInstalled) {
-    Write-Host ".NET SDK is installed, proceeding with launch.`n`n"
+    Write-Host ".NET SDK is installed.`n"
 } else {
     Write-Host ".NET SDK is not installed. Please install it from https://dotnet.microsoft.com/download. Exiting...`n"
+    return $false
+}
+
+# Function to check if .NET SDK version 6 or higher is installed
+function Test-DotNetSDK6OrHigherInstalled {
+    $dotnetVersion = dotnet --version
+    if ($dotnetVersion -match "^6\..*") {
+        return $true  # .NET SDK version 6 or higher is installed
+    } else {
+        return $false  # .NET SDK version 6 or higher is not installed
+    }
+}
+
+# Check if .NET SDK version 6 or higher is installed
+if (Test-DotNetSDK6OrHigherInstalled) {
+    Write-Host ".NET SDK version 6 or higher is installed, , proceeding with launch.`n`n"
+} else {
+    Write-Host ".NET SDK version 6 or higher is not installed. Please install it from https://dotnet.microsoft.com/download/dotnet/6.0."
     return $false
 }
 
