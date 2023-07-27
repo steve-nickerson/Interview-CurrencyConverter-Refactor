@@ -12,7 +12,7 @@ if (Check-NodeInstalled) {
     Write-Host "Node.js is installed."
 } else {
     Write-Host "Node.js is not installed. Please install it from https://nodejs.org/."
-    return $false
+    exit 1
 }
 
 # Define the required Node.js major version
@@ -23,7 +23,7 @@ function Check-NodeMajorVersion {
     $installed_version = (node -v).Substring(1)
     $installed_major_version = $installed_version.Split(".")[0]
 
-    if ($installed_major_version -ge $required_major_version) {
+    if ([int]$installed_major_version -ge [int]$required_major_version) {
         return $true  # Node.js major version meets the requirement
     } else {
         return $false  # Node.js major version does not meet the requirement
@@ -35,7 +35,7 @@ if (Check-NodeMajorVersion) {
     Write-Host "Node.js major version $required_major_version or higher is installed."
 } else {
     Write-Host "Node.js major version $required_major_version or higher is required. Please install it from https://nodejs.org/."
-    return $false
+    exit 1
 }
 
 # Use this script to install pkgs / build / run the React application easily

@@ -15,7 +15,7 @@ if (Test-DotNetSDKInstalled) {
     Write-Host ".NET SDK is installed.`n"
 } else {
     Write-Host ".NET SDK is not installed. Please install it from https://dotnet.microsoft.com/download. Exiting...`n"
-    return $false
+    exit 1
 }
 
 # Function to check if .NET SDK version 6 or higher is installed
@@ -33,7 +33,7 @@ if (Test-DotNetSDK6OrHigherInstalled) {
     Write-Host ".NET SDK version 6 or higher is installed, , proceeding with launch.`n`n"
 } else {
     Write-Host ".NET SDK version 6 or higher is not installed. Please install it from https://dotnet.microsoft.com/download/dotnet/6.0."
-    return $false
+    exit 1
 }
 
 Write-Host 'Restoring packages...'

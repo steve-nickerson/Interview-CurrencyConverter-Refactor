@@ -15,7 +15,7 @@ if check_dotnet_sdk; then
     echo -e ".NET SDK is installed.\n"
 else
     echo -e ".NET SDK is not installed. Please install it from https://dotnet.microsoft.com/download. Exiting...\n"
-    return 1
+    exit 1
 fi
 
 # Function to check if .NET SDK version 6 or higher is installed
@@ -33,7 +33,7 @@ if check_dotnet_sdk_6_or_higher_installed; then
     echo -e ".NET SDK version 6 or higher is installed, proceeding with launch.\n\n"
 else
     echo -e ".NET SDK version 6 or higher is not installed. Please install it from https://dotnet.microsoft.com/download/dotnet/6.0."
-    return 1
+    exit 1
 fi
 
 # Use this script to restore / build / run the dotnet BFF application easily

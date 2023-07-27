@@ -14,7 +14,7 @@ if check_node_installed; then
     echo "Node.js is installed."
 else
     echo "Node.js is not installed. Please install it from https://nodejs.org/."
-    return 1
+    exit 1
 fi
 
 #!/usr/bin/env bash
@@ -39,7 +39,7 @@ if check_node_major_version; then
     echo "Node.js major version $required_major_version or higher is installed."
 else
     echo "Node.js major version $required_major_version or higher is required. Please install it from https://nodejs.org/."
-    return 1
+    exit 1
 fi
 
 # Use this script to install pkgs / build / run the React application easily
