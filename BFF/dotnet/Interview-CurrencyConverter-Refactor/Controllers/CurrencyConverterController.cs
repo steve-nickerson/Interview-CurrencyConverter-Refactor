@@ -2,6 +2,7 @@
 
 namespace Interview_CurrencyConverter_Refactor.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
     public class CurrencyConverterController : Controller
     {

@@ -1,54 +1,64 @@
 # Currency Converter - Refactor
-
 ## Requirements
-
-- [.Net SDK 6.0 and Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
-- [NodeJS](https://nodejs.org/en/download) v16+ (recommended 20.x / current)
-  - or use a Node Version Manager like [nvm](https://github.com/nvm-sh/nvm), [nvm-windows](https://github.com/coreybutler/nvm-windows)
+### Backend (BFF)
+One of:
+- [.Net SDK and Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) v8.x
+- [NodeJS](https://nodejs.org/en/download) v20.x
+- [Golang](https://go.dev/) v1.22.x
+### Frontend (UI)
+- [NodeJS](https://nodejs.org/en/download) v20.x
 
 ### IDE
-Any that supports dotnet and javascript development
+Choose your favorite IDE or one of these:
   - [Visual Studio Code](https://code.visualstudio.com/download) (free)
   - [Visual Studio](https://visualstudio.microsoft.com/downloads/) (community edition free)
   - [JetBrains Rider](https://www.jetbrains.com/rider/) (free trial)
   - [JetBrains Webstorm](https://www.jetbrains.com/webstorm/) (free trial)
+  - [JetBrains GoLand](https://www.jetbrains.com/goland) (free trial)
 
 ## Setup
-The best way to work with this repository is to open the UI and BFF projects separately. Alternately
-open up the root folder in an IDE that supports working with both C# and JavaScript. If your IDE has
-an integrated Terminal open that as well, otherwise, open your favorite terminal/shell/console/powershell.
+The best way to work with this repository is to select a framework option for the backend (.Net, Node.js, Go) and open it. Then open the UI project in a separate IDE or window.
 
-Verify the applications are working by:
+Verify the applications are working properly by running the following commands:
 
->_If using CLI commands to launch, you'll need two terminals_
-
-__Follow the instructions below or you can use the provided launch scripts to execute the applications.__
-- To launch the backend run the file `launch-app.sh` or `launch-app.ps1`, located in the project folder `Interview-CurrencyConverter-Refactor`, from your shell.
-- To launch the frontend run the file `launch-app.sh` or `launch-app.ps1`, located in the project folder `UI`, from your shell.
-
-You may need to adjust execute permissions or policy. To do this enter the following from your shell:
-- For Bash: `chmod +x ./launch-app.sh`
-- For Administrator Powershell: `Set-ExecutionPolicy RemoteSigned`
-
-
-1. Start / Debug the .Net project or enter CLI commands
+### .NET BFF
+Start / Debug the .Net project or enter CLI commands from the BFF project directory
 
 ```shell
-# from project directory Interview-CurrencyConverter-Refactor/Interview-CurrencyConverter-Refactor
-dotnet restore Interview-CurrencyConverter-Refactor.csproj
-dotnet build Interview-CurrencyConverter-Refactor.csproj
-dotnet run Interview-CurrencyConverter-Refactor.csproj
+# from project directory BFF/dotnet
+dotnet build Interview-CurrencyConverter-Refactor.sln
+dotnet run Interview-CurrencyConverter-Refactor.sln --project Interview-CurrencyConverter-Refactor/Interview-CurrencyConverter-Refactor.csproj
+```
+### Node.js BFF
+Start / Debug the Node.js project or enter CLI commands from the BFF project directory
+
+```shell
+# from project directory BFF/nodejs
+npm install
+npm run dev
+```
+### Go BFF
+Start / Debug the Go project or enter CLI commands from the BFF project directory
+
+```shell
+# from project directory BFF/go
+go run main.go
 ```
 
-2. Start / Debug the UI project or enter CLI commands
+**For any of the above options, the server should be running on [http://localhost:58415/](http://localhost:58415/)**
+
+### UI (React)
+
+Start / Debug the UI project or enter CLI commands
 ```shell
-# from project directory UI
+# from project directory UI/react
 npm install
 npm run dev
 ```
 
-3. Open a browser and navigate to [http://localhost:5173/](http://localhost:5173/)
-4. Enter an amount and click CONVERT button
+### Validate the application
+- Open a browser and navigate to [http://localhost:5173/](http://localhost:5173/)
+- Enter an amount and click CONVERT button
 
 If everything is working properly you will see a conversion amount under the form.
 

@@ -653,6 +653,8 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/dotnetcore,aspnetcore,react,visualstudio,jetbrains+all,visualstudiocode
 
+**/.DS_Store*
+
 UI/node_modules/
 UI/.idea/
 UI/.vscode/
