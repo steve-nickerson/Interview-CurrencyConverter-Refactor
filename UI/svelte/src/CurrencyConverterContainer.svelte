@@ -8,7 +8,7 @@
         {code: "MXN", name: "Mexican Pesos"}
     ];
     let fromCountryCode = $state("USD");
-    let toCountryCode = $state("CAD");
+    let toCountryCode = $state("CaD");
     let fromAmount = $state(0);
     let toAmount = $state(0);
 
