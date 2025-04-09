@@ -1,8 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 	"net/http"
 	"strconv"
 )
@@ -53,7 +55,7 @@ func (c *CurrencyConverter) GetConvertedAmount(from string, to string, amount fl
 	}
 
 	if conversion == nil {
-		return 0.0, fmt.Errorf("Invalid country code: %s", from)
+		return 0.0, fmt.Errorf("invalid country code: %s", from)
 	}
 
 	fromRate := conversion.RateFromUSDToCurrency
@@ -68,7 +70,7 @@ func (c *CurrencyConverter) GetConvertedAmount(from string, to string, amount fl
 	}
 
 	if conversion1 == nil {
-		return 0.0, fmt.Errorf("Invalid country code: %s", to)
+		return 0.0, fmt.Errorf("invalid country code: %s", to)
 	}
 
 	toRate := conversion1.RateFromUSDToCurrency
@@ -77,13 +79,26 @@ func (c *CurrencyConverter) GetConvertedAmount(from string, to string, amount fl
 }
 
 func main() {
+	// Create a new CORS handler with liberal settings
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},                                       // Allow all origins
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}, // Allow all methods
+		AllowedHeaders:   []string{"*"},                                       // Allow all headers
+		AllowCredentials: true,                                                // Allow credentials
+	})
 	r := mux.NewRouter()
 
 	r.HandleFunc("/", handleRoot).Methods(http.MethodGet)
 	r.HandleFunc("/api/currencyconverter", handleCurrencyConverter).Methods(http.MethodGet)
 
+	// Wrap the router with the CORS middleware
+	handler := c.Handler(r)
+
 	fmt.Println("Server is running on port 58415")
-	http.ListenAndServe(":58415", r)
+	err := http.ListenAndServe(":58415", handler)
+	if err != nil {
+		return
+	}
 }
 
 func handleRoot(w http.ResponseWriter, req *http.Request) {
@@ -100,14 +115,16 @@ func handleRoot(w http.ResponseWriter, req *http.Request) {
 		</html>
 		`
 	htmlContent = fmt.Sprintf(htmlContent, port, port)
-	fmt.Fprintf(w, htmlContent)
+	if _, err := fmt.Fprintf(w, htmlContent); err != nil {
+		http.Error(w, "Failed to write response", http.StatusInternalServerError)
+		return
+	}
 }
 
 func handleCurrencyConverter(w http.ResponseWriter, req *http.Request) {
 	amountStr := req.URL.Query().Get("amount")
 	amount, err := strconv.ParseFloat(amountStr, 64)
 	if err != nil {
-		// handle error
 		http.Error(w, "Invalid amount", http.StatusBadRequest)
 		return
 	}
@@ -118,7 +135,23 @@ func handleCurrencyConverter(w http.ResponseWriter, req *http.Request) {
 	convertedAmount, err := NewCurrencyConverter(&CurrencyConverterRepositoryImpl{}).GetConvertedAmount(from, to, amount)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 
-	fmt.Fprintf(w, "%f", convertedAmount)
+	// Set Content-Type to application/json
+	w.Header().Set("Content-Type", "application/json")
+
+	// Create a JSON response
+	response := map[string]interface{}{
+		"from":            from,
+		"to":              to,
+		"amount":          amount,
+		"convertedAmount": fmt.Sprintf("%.2f", convertedAmount),
+	}
+
+	// Encode and write the JSON response, handling any errors
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
+		return
+	}
 }
