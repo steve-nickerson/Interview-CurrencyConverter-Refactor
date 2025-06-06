@@ -11,7 +11,6 @@ import "./CurrencyConverter.css";
                                 onFromAmountChanged,
                                 onFromCountryCodeChanged,
                                 onToCountryCodeChanged,
-                                onConversionRequested
                             }) => {
      return (
          <Fragment>
@@ -20,7 +19,6 @@ import "./CurrencyConverter.css";
                  id="currency-converter-form"
                  onSubmit={e => {
                      e.preventDefault();
-                     onConversionRequested();
                  }}
              >
                  <label>

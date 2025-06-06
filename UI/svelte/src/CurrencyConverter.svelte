@@ -3,7 +3,7 @@
 
     let {
         currencies, fromAmount, toAmount, fromCountryCode, toCountryCode,
-        onFromAmountChanged, onFromCountryCodeChanged, onToCountryCodeChanged, onConversionRequested
+        onFromAmountChanged, onFromCountryCodeChanged, onToCountryCodeChanged
     } = $props();
 </script>
 
@@ -12,7 +12,6 @@
     id="currency-converter-form"
     onsubmit={(e) => {
         e.preventDefault();
-        onConversionRequested();
     }}>
     <label><span>Amount</span>
         <input

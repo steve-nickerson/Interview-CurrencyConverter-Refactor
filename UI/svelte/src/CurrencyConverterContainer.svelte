@@ -39,7 +39,6 @@
     {fromCountryCode}
     {toAmount}
     {toCountryCode}
-    onConversionRequested={handleConversionRequested}
     onFromAmountChanged={handleFromAmountChanged}
     onFromCountryCodeChanged={handleFromCountryCodeChanged}
     onToCountryCodeChanged={handleToCountryCodeChanged}
