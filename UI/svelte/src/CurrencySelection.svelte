@@ -3,10 +3,10 @@
 </script>
 
 <select
-        onchange="{ e => onCurrencySelected(e.target.value) }"
-        value="{selectedValue}">
+    bind:value={selectedValue}
+    on:change={(e) => onCurrencySelected(e.target.value)}>
     {#each currencies as c}
-        <option value="{c.code}">{c.name}</option>
+        <option value={c.code}>{c.name}</option>
     {/each}
 </select>
 

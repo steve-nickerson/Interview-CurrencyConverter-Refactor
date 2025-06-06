@@ -7,25 +7,42 @@
         {code: "CAD", name: "Canadian Dollar"},
         {code: "MXN", name: "Mexican Pesos"}
     ];
+    
     let fromCountryCode = $state("USD");
     let toCountryCode = $state("CaD");
     let fromAmount = $state(0);
     let toAmount = $state(0);
 
+    const handleConversionRequested = async () => {
+        toAmount = await CurrencyConverterService(fromCountryCode, toCountryCode, fromAmount);
+    };
+
+    const handleFromAmountChanged = (value) => {
+        fromAmount = value;
+        toAmount = 0;
+    };
+
+    const handleFromCountryCodeChanged = (value) => {
+        fromCountryCode = value;
+        toAmount = 0;
+    };
+
+    const handleToCountryCodeChanged = (value) => {
+        toCountryCode = value;
+        toAmount = 0;
+    };
 </script>
 
 <CurrencyConverter
-        currencies={currencies}
-        fromAmount={fromAmount}
-        fromCountryCode={fromCountryCode}
-        onConversionRequested="{ async () => {
-            toAmount = await CurrencyConverterService(fromCountryCode, toCountryCode, fromAmount);
-        }}"
-        onFromAmountChanged="{value => { fromAmount = value; toAmount= 0; }}"
-        onFromCountryCodeChanged="{value => { fromCountryCode = value; toAmount= 0; }}"
-        onToCountryCodeChanged="{value => { toCountryCode = value; toAmount= 0; }}"
-        toAmount={toAmount}
-        toCountryCode={toCountryCode}
+    {currencies}
+    {fromAmount}
+    {fromCountryCode}
+    {toAmount}
+    {toCountryCode}
+    onConversionRequested={handleConversionRequested}
+    onFromAmountChanged={handleFromAmountChanged}
+    onFromCountryCodeChanged={handleFromCountryCodeChanged}
+    onToCountryCodeChanged={handleToCountryCodeChanged}
 />
 
 <style>

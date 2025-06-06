@@ -1,6 +1,4 @@
 <script>
-
-
     import CurrencySelection from "./CurrencySelection.svelte";
 
     let {
@@ -11,30 +9,31 @@
 
 <h1 id="currency-converter-heading">Currency Converter</h1>
 <form
-        id="currency-converter-form"
-        onsubmit="{e => {
+    id="currency-converter-form"
+    onsubmit={(e) => {
         e.preventDefault();
         onConversionRequested();
-    }}">
+    }}>
     <label><span>Amount</span>
         <input
-                onchange="{e => onFromAmountChanged(e.target.value)}"
-                required
-                value="{fromAmount}"/>
+            type="number"
+            bind:value={fromAmount}
+            oninput={(e) => onFromAmountChanged(Number(e.target.value))}
+            required/>
     </label>
     <label>
         <span>From</span>
         <CurrencySelection
-                currencies="{currencies}"
-                onCurrencySelected="{onFromCountryCodeChanged}"
-                selectedValue="{fromCountryCode}"/>
+                {currencies}
+                selectedValue={fromCountryCode}
+                onCurrencySelected={onFromCountryCodeChanged}/>
     </label>
     <label>
         <span>To</span>
         <CurrencySelection
-                currencies="{currencies}"
-                onCurrencySelected="{onToCountryCodeChanged}"
-                selectedValue="{toCountryCode}"/>
+                {currencies}
+                selectedValue={toCountryCode}
+                onCurrencySelected={onToCountryCodeChanged}/>
     </label>
     <!-- convert the currency -->
     <button id="currency-converter-submit">Convret</button>
